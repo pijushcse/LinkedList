@@ -27,7 +27,8 @@ public class Main {
         root = insert2(root, 5);
         //reverseLevelOrderPrint(root);
         //System.out.println(FindLevelWithMaxSum(root));
-        printLevelWise(root);
+        //printLevelWise(root);
+         
     }
 
     public static void printLevelWise(TreeNode root) {
@@ -237,7 +238,8 @@ public class Main {
 
         while (!queue.isEmpty()) {
             TreeNode top = queue.poll();
-            System.out.println(top.val);
+            if(top!=null)
+                System.out.println(top.val);
 
             if (top.left != null) {
                 queue.add(top.left);
