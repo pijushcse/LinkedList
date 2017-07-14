@@ -27,7 +27,7 @@ public class Main {
         root = insert2(root, 5);
         //reverseLevelOrderPrint(root);
         //System.out.println(FindLevelWithMaxSum(root));
-        //printLevelWise(root);
+        printLevelWise(root);
          
     }
 
