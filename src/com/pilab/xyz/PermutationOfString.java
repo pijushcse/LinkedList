@@ -2,7 +2,7 @@ package com.pilab.xyz;
 
 import java.util.Arrays;
 
-public class PowerSetInt {
+public class PermutationOfString {
 
     public static void main(String[] args) {
         int[] arr = {4, 55, 6, 7};

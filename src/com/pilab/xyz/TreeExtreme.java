@@ -2,13 +2,13 @@ package com.pilab.xyz;
 
 import java.util.Random;
 
-public class Main {
+public class TreeExtreme {
 
     Node root;
     int nodeCounter = 0;
 
     public static void main(String[] args) {
-        Main h = new Main();
+        TreeExtreme h = new TreeExtreme();
         Random r = new Random();
         for (int i = 0; i <= 7; i++) {
             int n = r.nextInt(500);
