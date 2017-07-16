@@ -3,36 +3,52 @@ package com.pilab.xyz.heap;
 public class BinaryHeap {
 
     public static void main(String[] args) {
-        HeapNode heap = new HeapNode(5);
- 
+        int[] A = {16,14,10,8,7,9,3,2,1,4};
+        HeapNode heap = new HeapNode(A.length);
+        buildHeap(heap, A);
     }
 
-    public void buildHeap(HeapNode heap, int[] A) {
+    private static void display(HeapNode heap) {
+        for (int i = 0; i < heap.arr.length; i++) {
+            int j = heap.arr[i];
+            System.out.print(j + ", ");
+        }
+        System.out.println();
+    }
+
+    private static void buildHeap(HeapNode heap, int[] A) {
         for (int i = 0; i < A.length; i++) {
-            heap.arr[i] = A[i] ;
+            heap.arr[i] = A[i];
         }
         heap.count = A.length;
-        
-        for (int i = (A.length-1)/2; i>=0; i--) {
+        display(heap);
+        for (int i = (A.length - 1) / 2; i >= 0; i--) {
             percolateDown(heap, i);
         }
+        display(heap);
     }
-    
-    public static void percolateDown(HeapNode heap, int i) {
+
+    private static void percolateDown(HeapNode heap, int i) {
         int l, r, max, temp;
         l = leftChildIndex(heap, i);
         r = rightChildIndex(heap, i);
-        if(l!=-1 && heap.arr[l] > heap.arr[i]) {
-            max =l;
+        if (l != -1 && heap.arr[l] > heap.arr[i]) {
+            max = l;
         } else {
             max = i;
         }
-        
-        if(r!=-1 && heap.arr[r] > heap.arr[i]) {
-            max =r;
+
+        if (r != -1 && heap.arr[r] > heap.arr[i]) {
+            max = r;
+        }
+        if (max != i) {
+            heap.arr[i] ^= heap.arr[max];
+            heap.arr[max] ^= heap.arr[i];
+            heap.arr[i] ^= heap.arr[max];
+            percolateDown(heap, max);
         }
     }
-    
+
     private static int getTop(HeapNode heap) {
         if (heap != null && heap.count > 0) {
             return heap.arr[0];
