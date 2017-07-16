@@ -11,34 +11,37 @@ public class LongestCommonSubSequence {
 
         int size = s1.length() > s2.length() ? s1.length() : s2.length();
 
-        int[][] arr = new int[s2.length() + 1][s1.length() + 1];
-        System.out.println(arr.length);
+        int[][] T = new int[s2.length() + 1][s1.length() + 1];
 
-        Map<Integer, Boolean> m = new HashMap<>();
-        
         for (int i = 1; i <= s2.length(); i++) {
             char c = s2.charAt(i - 1);
-             for (int j = 1; j <= s1.length(); j++) {
+            for (int j = 1; j <= s1.length(); j++) {
                 if (c == s1.charAt(j - 1)) {
-                    arr[i][j] = 1 + arr[i - 1][j - 1];
+                    T[i][j] = 1 + T[i - 1][j - 1];
                 } else {
-                    arr[i][j] = Math.max(arr[i][j - 1], arr[i - 1][j]);
+                    T[i][j] = Math.max(T[i][j - 1], T[i - 1][j]);
                 }
             }
         }
 
-//        for (int i = arr.length - 1; i > 0; i--) {
-//            int[] is = arr[i];
-//            for (int j = is.length - 1; j > 0; j--) {
-//                if( is[j] != arr[i-1][j-1] && is[j-1] == arr[i-1][j] ) {
-//                    System.out.println(s2.charAt(i));
-//                    
-//                }
-//            }
-//            System.out.println();
-//        }
-
-
+        int j = s1.length() ;
+        for (int i = s2.length(); i > 0; i--) {
+            while(j > 0) {
+                if( ( T[i][j-1] == T[i][j]) && ( T[i][j-1] == T[i-1][j]) && ( T[i-1][j] == T[i-1][j-1])) {
+                   break;
+                } else if( (T[i][j] == 1+T[i-1][j-1]) && ( T[i][j-1] == T[i-1][j]) && ( T[i-1][j] == T[i-1][j-1])) {
+                    j --;
+                    System.out.print(s2.charAt(i)+", ");
+                    break;
+                } 
+                if( T[i-1][j] >= T[i][j-1]) {
+                    break;
+                } else {
+                    j--;
+                }
+            }
+            
+        }
         
     }
 }
