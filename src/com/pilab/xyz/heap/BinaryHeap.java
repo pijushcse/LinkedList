@@ -1,13 +1,58 @@
 package com.pilab.xyz.heap;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class BinaryHeap {
 
     public static void main(String[] args) {
-        int[] A = {16,14,10,8,7,9,3,2,1,4};
-        HeapNode heap = new HeapNode(A.length);
-        buildHeap(heap, A);
+//        int[] A = {2,3,4,5,6,7,8,9,19,20,21};
+//        HeapNode heap = new HeapNode(A.length);
+//        buildHeap(heap, A);
+        
+        int[] t = {12, 11, 13, 5, 6, 7};
+        HeapNode heap1 = new HeapNode(t.length);
+       // buildHeap(heap1, t);
+        heapSort(heap1, t);
     }
 
+    public static void heapSort(int[] T) {
+        for (int i = T.length/2-1; i >=0; i--) {
+            percolateDown(T,T.length, i);
+        }
+        for (int i = 0; i < T.length; i++) {
+            int j = T[i];
+            System.out.print(j+" ");
+        }
+        
+        for (int i =  T.length-1; i>=0;  i--) {
+            int t = T[0];
+            T[0] = T[i];
+            T[i] = t;
+            percolateDown(T, i, 0);
+        }
+        System.out.println("");
+        for (int i = 0; i < T.length; i++) {
+            int j = T[i];
+            System.out.print(j+" ");
+        }
+ 
+    }
+    
+    private static void heapSort(HeapNode heap, int[] T) {
+        buildHeap(heap, T);
+        int oldSize= heap.count;
+         for (int i = T.length-1; i> 0 ; i--) {
+            int t = heap.arr[0];
+            heap.arr[0] = heap.arr[heap.count -1];
+            heap.arr[0] = t;
+            heap.count -- ;
+            percolateDown(heap, i-1);
+        }
+        heap.count = oldSize;
+        display(heap);
+    }
+    
     private static void display(HeapNode heap) {
         for (int i = 0; i < heap.arr.length; i++) {
             int j = heap.arr[i];
@@ -21,31 +66,48 @@ public class BinaryHeap {
             heap.arr[i] = A[i];
         }
         heap.count = A.length;
-        display(heap);
-        for (int i = (A.length - 1) / 2; i >= 0; i--) {
+        for (int i = (heap.count) / 2 -1; i >= 0; i--) {
             percolateDown(heap, i);
         }
         display(heap);
     }
 
-    private static void percolateDown(HeapNode heap, int i) {
-        int l, r, max, temp;
-        l = leftChildIndex(heap, i);
-        r = rightChildIndex(heap, i);
-        if (l != -1 && heap.arr[l] > heap.arr[i]) {
+     private static void percolateDown(int[] A, int n, int i) {
+        int l, r, max=i;
+        l = 2*i +1;
+        r = 2*i + 1;
+        if (l <n && A[l] > A[i]) {
             max = l;
-        } else {
-            max = i;
-        }
-
-        if (r != -1 && heap.arr[r] > heap.arr[i]) {
+        } 
+        
+        if (r<n && A[r] > A[i]) {
             max = r;
         }
         if (max != i) {
-            heap.arr[i] ^= heap.arr[max];
-            heap.arr[max] ^= heap.arr[i];
-            heap.arr[i] ^= heap.arr[max];
-            percolateDown(heap, max);
+           int temp = A[i];
+            A[i] = A[max];
+            A[max] = temp;
+            percolateDown(A,n, max);
+        }
+    }
+
+    
+    private static void percolateDown(HeapNode heap, int i) {
+        int l, r, largest=i;
+        l = leftChildIndex(heap, i);
+        r = rightChildIndex(heap, i);
+        if (l != -1 && heap.arr[l] > heap.arr[largest]) {
+            largest = l;
+        } 
+        
+        if (r != -1 && heap.arr[r] > heap.arr[largest]) {
+            largest = r;
+        }
+        if (largest != i) {
+           int temp = heap.arr[i];
+            heap.arr[i] = heap.arr[largest];
+            heap.arr[largest] = temp;
+            percolateDown(heap, largest);
         }
     }
 
